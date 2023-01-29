@@ -7,26 +7,30 @@ namespace IMDB.Models
 {
     public class User: BaseEntity
     {
+        [Required, JsonIgnore]
+        public Guid UserId { get; set; }
+        public Guid? DirectorId { get; set; }
+        public UserSettings? UserSettings { get; set; }
+        public Director? FavouriteDirector { get; set; }
+
         [Required, MinLength(6), MaxLength(128)]
-        public string Username { get; set; } = null!;
+        public string? Username { get; set; }
 
         [Required, RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Ati introdus un email gresit!")]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
 
         [Required, RegularExpression(@"^(?=.{1,50}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$")]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
         [Required, RegularExpression(@"^(?=.{1,50}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$")]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
 
         [Required, RegularExpression(@"^((19[2-9][0-9])|(200[0-9]))$",ErrorMessage = "Nu indepliniti varsta necesara pentru a intra pe acest site!")]
         public int Year { get; set; }
 
-        [JsonIgnore]
-        public string PasswordHash { get; set; } = null!;
-
-        public string? FavouriteActor { get; set; }
-
+        [Required, JsonIgnore]
+        public string? Password { get; set; }
         public Role RoleName { get; set; }
+
     }
 }
