@@ -9,9 +9,9 @@ namespace IMDB.Models
     {
         public Guid MovieId { get; set; }
         public Guid DirectorId { get; set; }
-        public Director? Director { get; set; }
+        public Director Director { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public ICollection<MovieGenre>? MovieGenre { get; set; }
+        public ICollection<MovieGenre> MovieGenre { get; set; }
         public string? MovieTitle { get; set; }
         public string? MovieDescription { get; set; }
 

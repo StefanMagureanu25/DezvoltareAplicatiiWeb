@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "A8RudzrADjo42+/fFTIM8uASxSEEVgBzcI/21bXt3vtGjMHoD4v3VmbNGCufnK7wzcYPZ9s1In2nvHPNGi9LQA==",
+  "dgSpecHash": "9bDbwTfMKRf9GL14jzG/HjmVPnncUxw4E/Tmhh2LmoU+lzH6xN7ezlhqRhlSItCJ33/ffamwXASQ0v+PRc+ZIg==",
   "success": true,
   "projectFilePath": "D:\\DezvoltareAplicatiiWeb\\IMDB\\IMDB\\IMDB.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\stefa\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\stefa\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\stefa\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\stefa\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\stefa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\stefa\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",
     "C:\\Users\\stefa\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

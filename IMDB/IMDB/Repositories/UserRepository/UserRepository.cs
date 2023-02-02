@@ -26,5 +26,9 @@ namespace IMDB.Repositories.UserRepository
         {
             return await _IMDBtable.AsNoTracking().GroupBy(u => u.FavouriteDirector).ToListAsync();
         }
+        public User FindByUsername(string username)
+        {
+            return _IMDBtable.FirstOrDefault(x => x.Username == username);
+        }
     }
 }
