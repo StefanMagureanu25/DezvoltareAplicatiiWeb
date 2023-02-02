@@ -43,10 +43,22 @@ namespace IMDB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("DirectorFirstName")
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DirectorLastName")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nationality")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DirectorId");
@@ -57,6 +69,10 @@ namespace IMDB.Migrations
             modelBuilder.Entity("IMDB.Models.Genre", b =>
                 {
                     b.Property<Guid>("GenreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -82,8 +98,10 @@ namespace IMDB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MovieTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("MovieId");
 
@@ -98,7 +116,7 @@ namespace IMDB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DirectorId")
+                    b.Property<Guid>("DirectorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
@@ -117,7 +135,7 @@ namespace IMDB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -139,24 +157,43 @@ namespace IMDB.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("IMDB.Models.UserSettings", b =>
+            modelBuilder.Entity("IMDB.Models.UserPreferences", b =>
                 {
-                    b.Property<Guid>("UserSettingsId")
+                    b.Property<Guid>("UserPreferencesId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ColorPreference")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FontSize")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdatedPreferences")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PreferredMovieGenre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SendNotifications")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserSettingsId");
+                    b.HasKey("UserPreferencesId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSettings");
+                    b.ToTable("UserPreferences");
                 });
 
             modelBuilder.Entity("IMDB.Models.AssociativeModels.MovieGenre", b =>
@@ -193,16 +230,18 @@ namespace IMDB.Migrations
                 {
                     b.HasOne("IMDB.Models.Director", "FavouriteDirector")
                         .WithMany("Users")
-                        .HasForeignKey("DirectorId");
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FavouriteDirector");
                 });
 
-            modelBuilder.Entity("IMDB.Models.UserSettings", b =>
+            modelBuilder.Entity("IMDB.Models.UserPreferences", b =>
                 {
                     b.HasOne("IMDB.Models.User", "User")
-                        .WithOne("UserSettings")
-                        .HasForeignKey("IMDB.Models.UserSettings", "UserId")
+                        .WithOne("UserPreferences")
+                        .HasForeignKey("IMDB.Models.UserPreferences", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -228,7 +267,8 @@ namespace IMDB.Migrations
 
             modelBuilder.Entity("IMDB.Models.User", b =>
                 {
-                    b.Navigation("UserSettings");
+                    b.Navigation("UserPreferences")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

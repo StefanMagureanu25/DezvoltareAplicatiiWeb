@@ -9,9 +9,9 @@ namespace IMDB.Models
     {
         [Required, JsonIgnore]
         public Guid UserId { get; set; }
-        public Guid? DirectorId { get; set; }
-        public UserSettings? UserSettings { get; set; }
-        public Director? FavouriteDirector { get; set; }
+        public Guid DirectorId { get; set; }
+        public UserPreferences UserPreferences { get; set; }
+        public Director FavouriteDirector { get; set; }
 
         [Required, MinLength(6), MaxLength(128)]
         public string? Username { get; set; }
@@ -29,7 +29,7 @@ namespace IMDB.Models
         public int Year { get; set; }
 
         [Required, JsonIgnore]
-        public string? Password { get; set; }
+        public string PasswordHash { get; set; }
         public Role RoleName { get; set; }
 
     }

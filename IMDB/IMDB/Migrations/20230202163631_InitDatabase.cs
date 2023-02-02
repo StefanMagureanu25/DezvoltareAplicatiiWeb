@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IMDB.Migrations
 {
     /// <inheritdoc />
-    public partial class initializeDatabase : Migration
+    public partial class InitDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,11 @@ namespace IMDB.Migrations
                 columns: table => new
                 {
                     DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DirectorFirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DirectorLastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Nationality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +31,8 @@ namespace IMDB.Migrations
                 name: "Genres",
                 columns: table => new
                 {
-                    GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +45,8 @@ namespace IMDB.Migrations
                 {
                     MovieId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MovieTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MovieTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MovieDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -61,13 +66,13 @@ namespace IMDB.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleName = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -78,7 +83,8 @@ namespace IMDB.Migrations
                         name: "FK_Users_Directors_DirectorId",
                         column: x => x.DirectorId,
                         principalTable: "Directors",
-                        principalColumn: "DirectorId");
+                        principalColumn: "DirectorId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,18 +112,24 @@ namespace IMDB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserSettings",
+                name: "UserPreferences",
                 columns: table => new
                 {
-                    UserSettingsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserPreferencesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ColorPreference = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LastUpdatedPreferences = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ColorPreference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FontSize = table.Column<int>(type: "int", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SendNotifications = table.Column<bool>(type: "bit", nullable: false),
+                    PreferredMovieGenre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSettings", x => x.UserSettingsId);
+                    table.PrimaryKey("PK_UserPreferences", x => x.UserPreferencesId);
                     table.ForeignKey(
-                        name: "FK_UserSettings_Users_UserId",
+                        name: "FK_UserPreferences_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -135,15 +147,15 @@ namespace IMDB.Migrations
                 column: "DirectorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPreferences_UserId",
+                table: "UserPreferences",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_DirectorId",
                 table: "Users",
                 column: "DirectorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserSettings_UserId",
-                table: "UserSettings",
-                column: "UserId",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -153,7 +165,7 @@ namespace IMDB.Migrations
                 name: "MovieGenres");
 
             migrationBuilder.DropTable(
-                name: "UserSettings");
+                name: "UserPreferences");
 
             migrationBuilder.DropTable(
                 name: "Genres");

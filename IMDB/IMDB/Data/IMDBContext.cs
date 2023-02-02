@@ -10,7 +10,7 @@ namespace IMDB.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet <Director> Directors { get; set; } 
-        public DbSet <UserSettings> UserSettings { get; set; }
+        public DbSet <UserPreferences> UserPreferences { get; set; }
         public DbSet <MovieGenre> MovieGenres { get; set; }
         public IMDBContext(DbContextOptions<IMDBContext> options) : base(options)
         {
@@ -31,14 +31,14 @@ namespace IMDB.Data
             modelBuilder.Entity<Movie>()
                 .HasKey(m => m.MovieId);
 
-            modelBuilder.Entity<UserSettings>()
-                .HasKey(us => us.UserSettingsId);
+            modelBuilder.Entity<UserPreferences>()
+                .HasKey(us => us.UserPreferencesId);
 
             //one to one (User <-> UserSettings)
             modelBuilder.Entity<User>()
-                .HasOne(u => u.UserSettings)
+                .HasOne(u => u.UserPreferences)
                 .WithOne(us => us.User)
-                .HasForeignKey<UserSettings>(us => us.UserId);
+                .HasForeignKey<UserPreferences>(us => us.UserId);
 
             //one to many (Director <-> Movie)
             modelBuilder.Entity<Director>().

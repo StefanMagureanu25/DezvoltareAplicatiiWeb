@@ -1,12 +1,13 @@
 ﻿using IMDB.Models.AssociativeModels;
+using IMDB.Models.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace IMDB.Models
 {
-    public class Genre
+    public class Genre : BaseEntity
     {
-        [Required, Key]
+        [Required]
         public Guid GenreId { get; set; }
-        public ICollection<MovieGenre> MovieGenre { get; set; }
+        public ICollection<MovieGenre>? MovieGenre { get; set; }
     }
 }
