@@ -7,6 +7,9 @@ namespace IMDB.Repositories.DirectorRepository
     {
         //Get a director with all his movies directed
         Task<IEnumerable<Director>> GetDirectorWithMoviesByNameAsync(string DirectorFirstName, string DirectorLastName);
+
+        //Get all directors
+        public Task<IEnumerable<Director>> GetAllDirectors();
     }
 }
 

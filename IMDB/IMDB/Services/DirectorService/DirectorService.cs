@@ -40,7 +40,7 @@ namespace IMDB.Services.DirectorService
 
         public async Task<IEnumerable<Director>> GetAllDirectors()
         {
-            return await _directorRepository.GetAllAsync();
+            return await _directorRepository.GetAllDirectors();
         }
 
         public Director GetDirectorById(Guid id)
@@ -51,6 +51,7 @@ namespace IMDB.Services.DirectorService
         public void DeleteDirector(Guid id)
         {
             _directorRepository.Delete(GetDirectorById(id));
+            _directorRepository.SaveAsync().Wait();
         }
 
         public bool Save()

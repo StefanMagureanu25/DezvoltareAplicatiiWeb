@@ -39,7 +39,7 @@ namespace IMDB.Controllers
         public async Task<ActionResult<Director>> AddDirector(DirectorRequestDTO newDirector)
         {
             var director = await _directorService.AddDirector(newDirector);
-            return CreatedAtRoute("GetDirectorById", new { id = director.DirectorId }, director);
+            return CreatedAtRoute("GetDirectorById", new { id = director.Id }, director);
         }
 
         [HttpPut("{id}")]

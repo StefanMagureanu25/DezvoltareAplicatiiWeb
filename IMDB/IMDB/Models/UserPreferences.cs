@@ -6,7 +6,6 @@ namespace IMDB.Models
     public class UserPreferences : BaseEntity
     {
         [JsonIgnore]
-        public Guid UserPreferencesId { get; set; }
         public Guid UserId { get; set; }
         public User? User { get; set; }
 

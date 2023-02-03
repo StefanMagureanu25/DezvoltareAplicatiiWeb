@@ -7,7 +7,6 @@ namespace IMDB.Models
 {
     public class Movie: BaseEntity
     {
-        public Guid MovieId { get; set; }
         public Guid? DirectorId { get; set; }
         public Director? Director { get; set; }
         public DateTime? ReleaseDate { get; set; }

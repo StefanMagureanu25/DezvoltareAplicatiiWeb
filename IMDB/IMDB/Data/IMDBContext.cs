@@ -20,19 +20,19 @@ namespace IMDB.Data
         {
             //primary keys 
             modelBuilder.Entity<User>()
-                .HasKey(u => u.UserId);
+                .HasKey(u => u.Id);
 
             modelBuilder.Entity<Director>()
-                .HasKey(d => d.DirectorId);
+                .HasKey(d => d.Id);
 
             modelBuilder.Entity<Genre>()
-                .HasKey(g => g.GenreId);
+                .HasKey(g => g.Id);
 
             modelBuilder.Entity<Movie>()
-                .HasKey(m => m.MovieId);
+                .HasKey(m => m.Id);
 
             modelBuilder.Entity<UserPreferences>()
-                .HasKey(us => us.UserPreferencesId);
+                .HasKey(us => us.Id);
 
             //one to one (User <-> UserPreferences)
             modelBuilder.Entity<User>()

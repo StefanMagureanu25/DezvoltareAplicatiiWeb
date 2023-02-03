@@ -22,5 +22,9 @@ namespace IMDB.Repositories.DirectorRepository
                 .Include(d => d.Movies)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Director>> GetAllDirectors()
+        {
+            return _context.Directors.ToList();
+        }
     }
 }
