@@ -3,7 +3,6 @@ using IMDB.Models;
 using IMDB.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 using BCryptNet = BCrypt.Net.BCrypt;
-using AutoMapper;
 
 namespace IMDB.Controllers
 {
@@ -12,11 +11,9 @@ namespace IMDB.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        public UsersController(IUserService userService, IMapper mapper)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
         }
 
         [HttpPost("authenticate")]

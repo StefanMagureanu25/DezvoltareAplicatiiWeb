@@ -34,7 +34,7 @@ namespace IMDB.Data
             modelBuilder.Entity<UserPreferences>()
                 .HasKey(us => us.UserPreferencesId);
 
-            //one to one (User <-> UserSettings)
+            //one to one (User <-> UserPreferences)
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserPreferences)
                 .WithOne(us => us.User)

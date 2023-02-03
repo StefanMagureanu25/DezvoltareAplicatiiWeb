@@ -6,7 +6,7 @@ namespace IMDB.Models.DTOs.Users
     {
         [Required, MaxLength(100)]
         public string Username { get; set; }
-        [Required, RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Ati introdus un email gresit!")]
+        [Required]
         public string Email { get; set; }
 
         [Required, MaxLength(64)]

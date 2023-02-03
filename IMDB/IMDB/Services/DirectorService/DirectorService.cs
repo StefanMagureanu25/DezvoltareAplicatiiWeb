@@ -1,14 +1,15 @@
 ﻿using IMDB.Models.DTOs.Directors;
 using IMDB.Models;
 using IMDB.Repositories.GenericRepository;
+using IMDB.Repositories.DirectorRepository;
 
 namespace IMDB.Services.DirectorService
 {
     public class DirectorService : IDirectorService
     {
-        private readonly IGenericRepository<Director> _directorRepository;
+        private readonly IDirectorRepository _directorRepository;
 
-        public DirectorService(IGenericRepository<Director> directorRepository)
+        public DirectorService(IDirectorRepository directorRepository)
         {
             _directorRepository = directorRepository;
         }

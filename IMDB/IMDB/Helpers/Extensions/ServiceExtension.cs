@@ -22,8 +22,8 @@ namespace IMDB.Helpers.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
-            //services.AddTransient<IMovieService, MovieService>();
-            //services.AddTransient<IDirectorService, DirectorService>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IDirectorService, DirectorService>();
 
             return services;
         }

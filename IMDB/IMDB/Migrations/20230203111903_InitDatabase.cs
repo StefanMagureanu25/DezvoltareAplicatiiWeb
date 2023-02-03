@@ -44,10 +44,11 @@ namespace IMDB.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MovieTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MovieTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MovieDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: true),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -57,8 +58,7 @@ namespace IMDB.Migrations
                         name: "FK_Movies_Directors_DirectorId",
                         column: x => x.DirectorId,
                         principalTable: "Directors",
-                        principalColumn: "DirectorId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "DirectorId");
                 });
 
             migrationBuilder.CreateTable(
@@ -71,7 +71,7 @@ namespace IMDB.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleName = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

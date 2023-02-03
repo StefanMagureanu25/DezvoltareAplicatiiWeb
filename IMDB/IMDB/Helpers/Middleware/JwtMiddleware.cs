@@ -1,43 +1,25 @@
 ﻿using IMDB.Helpers.Authorization;
+using IMDB.Services.UserService;
 
 namespace IMDB.Helpers.Middleware
 {
     public class JwtMiddleware
     {
-        private readonly RequestDelegate _next;
-        private readonly JwtUtils _jwtUtils;
-
-        public JwtMiddleware(RequestDelegate next, JwtUtils jwtUtils)
+        private readonly RequestDelegate _nextRequestDelegate;
+        public JwtMiddleware(RequestDelegate requestDelegate)
         {
-            _next = next;
-            _jwtUtils = jwtUtils;
+            _nextRequestDelegate = requestDelegate;
         }
-
-        public async Task InvokeAsync(HttpContext context)
+        public async Task Invoke(HttpContext httpcontext, IUserService userService, IJwtUtils jwtUtils)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split("").Last();
-
-            if (token != null)
+            var token = httpcontext.Request.Headers["Authorization"].FirstOrDefault()?.Split("").Last();
+            var userId = jwtUtils.ValidateJwtToken(token);
+            if (userId != Guid.Empty)
             {
-                var userId = _jwtUtils.ValidateJwtToken(token);
-
-                if (userId != Guid.Empty)
-                {
-                    context.Items.Add("userId", userId);
-                }
-                else
-                {
-                    context.Response.StatusCode = 401;
-                    return;
-                }
-            }
-            else
-            {
-                context.Response.StatusCode = 401;
-                return;
+                httpcontext.Items["User"] = userService.GetById(userId);
             }
 
-            await _next.Invoke(context);
+            await _nextRequestDelegate(httpcontext);
         }
     }
 }

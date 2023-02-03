@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IMDB.Migrations
 {
     [DbContext(typeof(IMDBContext))]
-    [Migration("20230202163631_InitDatabase")]
+    [Migration("20230203111903_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -90,7 +90,7 @@ namespace IMDB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DirectorId")
+                    b.Property<Guid?>("DirectorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Id")
@@ -101,9 +101,13 @@ namespace IMDB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MovieTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("MovieId");
@@ -118,6 +122,10 @@ namespace IMDB.Migrations
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Age")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<Guid>("DirectorId")
                         .HasColumnType("uniqueidentifier");
@@ -149,9 +157,6 @@ namespace IMDB.Migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
@@ -222,9 +227,7 @@ namespace IMDB.Migrations
                 {
                     b.HasOne("IMDB.Models.Director", "Director")
                         .WithMany("Movies")
-                        .HasForeignKey("DirectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DirectorId");
 
                     b.Navigation("Director");
                 });
@@ -270,8 +273,7 @@ namespace IMDB.Migrations
 
             modelBuilder.Entity("IMDB.Models.User", b =>
                 {
-                    b.Navigation("UserPreferences")
-                        .IsRequired();
+                    b.Navigation("UserPreferences");
                 });
 #pragma warning restore 612, 618
         }
