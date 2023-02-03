@@ -5,6 +5,7 @@ namespace IMDB.Repositories.GenericRepository
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         //Get all data needed
+        TEntity GetById(Guid id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         public IQueryable<TEntity> GetAllAsQueryable();
 

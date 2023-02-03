@@ -12,8 +12,10 @@ namespace IMDB.Models
         public Director Director { get; set; }
         public DateTime ReleaseDate { get; set; }
         public ICollection<MovieGenre> MovieGenre { get; set; }
-        public string? MovieTitle { get; set; }
+        public string MovieTitle { get; set; }
         public string? MovieDescription { get; set; }
-
+        [Range(0, 10)]
+        //According to IMDB
+        public double? Rating { get; set; }
     }
 }

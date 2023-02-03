@@ -16,6 +16,11 @@ namespace IMDB.Repositories.GenericRepository
         }
 
         //Get all data needed implemented from the interface
+
+        public TEntity GetById(Guid id)
+        {
+            return _IMDBcontext.Set<TEntity>().FirstOrDefault(e => e.Id == id);
+        }
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _IMDBtable.AsNoTracking().ToListAsync();

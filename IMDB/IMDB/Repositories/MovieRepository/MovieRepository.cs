@@ -37,5 +37,10 @@ namespace IMDB.Repositories.MovieRepository
                 .Where(m => DateTime.Parse(m.ToString()).Year > year)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Movie>> GetAllMovies()
+        {
+            return _dbContext.Movies.ToList();
+        }
     }
 }

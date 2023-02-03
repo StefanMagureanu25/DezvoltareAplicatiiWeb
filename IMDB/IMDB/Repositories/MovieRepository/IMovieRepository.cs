@@ -14,5 +14,7 @@ namespace IMDB.Repositories.MovieRepository
         //Get all movies later than the given year
         Task<IEnumerable<Movie>> GetMoviesLaterThanAsync(int year);
 
+        //Get all movies
+       Task<IEnumerable<Movie>> GetAllMovies();
     }
 }

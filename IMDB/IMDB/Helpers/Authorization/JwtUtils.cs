@@ -7,7 +7,7 @@ using System.Text;
 
 namespace IMDB.Helpers.Authorization
 {
-    public class JwtUtils
+    public class JwtUtils : IJwtUtils
     {
         public readonly AppSetings _appSetings;
         public JwtUtils(IOptions<AppSetings> appSetings)
