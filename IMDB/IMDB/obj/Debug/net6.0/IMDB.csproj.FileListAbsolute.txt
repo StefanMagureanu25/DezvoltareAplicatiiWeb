@@ -91,3 +91,9 @@ D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\runtimes\win\lib\netstandar
 D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\BCrypt.Net-Next.dll
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\angular.json
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\package-lock.json
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\package.json
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\tsconfig.app.json
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\tsconfig.json
+D:\DezvoltareAplicatiiWeb\IMDB\IMDB\bin\Debug\net6.0\Views\tsconfig.spec.json

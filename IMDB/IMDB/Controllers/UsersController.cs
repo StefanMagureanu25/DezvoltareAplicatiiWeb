@@ -3,6 +3,8 @@ using IMDB.Models;
 using IMDB.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 using BCryptNet = BCrypt.Net.BCrypt;
+using IMDB.Helpers.Attributes;
+using IMDB.Models.Enums;
 
 namespace IMDB.Controllers
 {
@@ -17,9 +19,14 @@ namespace IMDB.Controllers
         }
 
         [HttpPost("authenticate")]
-        public UserResponseDTO Authenticate(UserRequestDTO user)
+        public async Task<IActionResult> Authenticate(UserRequestDTO user)
         {
-            return _userService.Authenticate(user);
+            var response = _userService.Authenticate(user);
+            if (response == null)
+            {
+                return BadRequest("Username or password is invalid!");
+            }
+            return Ok();
         }
 
         [HttpGet]
@@ -34,6 +41,22 @@ namespace IMDB.Controllers
             return _userService.GetById(id);
         }
 
+        [HttpPost("create-admin")]
+        public async Task<IActionResult> CreateAdmin(UserRequestDTO newUser)
+        {
+            var userToCreate = new User
+            {
+                Id = Guid.NewGuid(),
+                Username = newUser.Username,
+                Email = newUser.Email,
+                PasswordHash = BCryptNet.HashPassword(newUser.Password),
+                RoleName = Role.Admin
+            };
+
+            await _userService.Create(userToCreate);
+            return Ok();
+        }
+
         [HttpPost("user-create")]
         public async Task<IActionResult> CreateUser( UserRequestDTO newUser)
         {
@@ -44,7 +67,8 @@ namespace IMDB.Controllers
                     Id = Guid.NewGuid(),
                     Username = newUser.Username,
                     Email = newUser.Email,
-                    PasswordHash = BCryptNet.HashPassword(newUser.Password)
+                    PasswordHash = BCryptNet.HashPassword(newUser.Password),
+                    RoleName = Role.User
                 });
                 if (_userService.Save())
                 {
@@ -60,17 +84,42 @@ namespace IMDB.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorization(Role.User)]
+        [HttpGet("user")]
+        public IActionResult GetAllUser()
+        {
+            return Ok("User");
+        }
+
+        [Authorization(Role.Admin)]
+        [HttpGet("admin")]
+        public async Task<IActionResult> GetAllAdmin()
+        {
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
+        }
+
         [HttpPut]
         public IActionResult Update(User updatedUser)
         {
             _userService.Update(updatedUser);
             return Ok();
         }
-
+        [Authorization(Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid Id)
         {
-            _userService.Delete(Id);
+            var userFound = _userService.GetById(Id);
+            if (userFound == null)
+            {
+                return BadRequest("The ID does not exist.");
+            }
+            _userService.Delete(userFound);
+            if (_userService.Save() == false)
+            {
+                return BadRequest("Database error.");
+            }
             return Ok();
         }
     }
